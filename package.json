@@ -1,0 +1,19 @@
+{
+  "name": "static_search",
+  "version": "0.0.1",
+  "description": "Index and search static txt content.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "tfidf",
+    "search"
+  ],
+  "author": "Tim Brockman",
+  "license": "MIT",
+  "devDependencies": {
+    "expect.js": "^0.3.1"
+  }
+}

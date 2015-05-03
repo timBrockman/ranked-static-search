@@ -3,18 +3,20 @@ todo:
   - [x] write spec for indexer
   - [ ] write legit tests for indexer
   - [ ] write legit tests for searcher
-  - [ ] write some precision/recall type thing
-  - [ ] searcher: write basic cos similarity search filter
+  - [ ] write some precision/recall benchmarking thing
+  - [ ] searcher: write base tf-idf ranked search
+  - [ ] searcher: write cos similarity option search filter
   - [ ] searcher: write multi-term suggestive search feature
   - [x] index: simple folder search
   - [x] index: get corpus size
   - [x] index: read txt files
   - [ ] index: write inverse index
   - [ ] index: write tf indexes
-  - [x] indexer: write simple text cleaner
-  - [x] indexer: write term frequency indexer
-  - [x] indexer: write vocab builder
-  - [x] indexer: write inverse indexer
+  - [x] indexer: simple text cleaner
+  - [x] indexer: term frequency indexer
+  - [x] indexer: vocab builder
+  - [x] indexer: inverse indexer
+  - [x] indexer: suggestive search list
   - [ ] indexer: calculate inverse document frequency
   
 todo: Find and link my old tfidf calculating spread sheet to check values against. 
@@ -52,5 +54,17 @@ It would be nice to do some .md for static documentation type sites.. like those
       - it should create an term frequency index
       - it should create an inverse document frequency index
       - it should log10 normalize the values
+      - it should create an suggestive search word only list
+    - it should write tf indices for documents
+    - it should write inverse index with idf values
+    - it should write tf-idf values into each index after all indexes are counted
+    - it should write the demo page to the destination
+    - describe the searcher
+      - it should read the indexes
+      - it should suggest words based on corpus dictionary
+      - it should use space separation to suggest more words
+      - it should calculate cosine similarity
+      - it should return top x matches
+      - it should use cosine similarity to rank matches
 
-TDD feels like writing the answer for a math problem before entering values in the calculator.
+(B/T)DD feels like writing the answer for a math problem before solving it.

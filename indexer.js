@@ -4,7 +4,9 @@ module.exports = {
   tfIndex:tfIndex,
   buildVocab:buildVocab,
   logNormalize:logNormalize,
-  calculateIDF:calculateIDF
+  calculateIDF:calculateIDF,
+  calculateTFIDF:calculateTFIDF,
+  createSuggestions:createSuggestions
 };
 
 function cleanTxt(txt){
@@ -45,28 +47,42 @@ function buildVocab(setObjA, setObjB, docName){
         'idf':1,
         'inverseIndex':[]
       };
-      vocab[atKey]['inverseIndex']= docName;
+      vocab[atKey]['inverseIndex']= {docName:1.0};
     }else{
       vocab[atKey]['idf']+=1;
-      vocab[atKey]['inverseIndex'].push(docName);
+      vocab[atKey]['inverseIndex'].push({docName:1.0});
     }
   }
+  return vocab;
+}
+
+function createSuggestions(vocab){
+  var words = [];
+  for(var atWord in vocab){
+    words.push(atWord);
+  }
+  return words;
 }
 
 function logNormalize(value){
   if(value < 1){
     return 0;
   }else{
-    return 1+ log10(value);
-  }
+    return log10(value);
+  }// don't forget to add one to tf
   function log10(x) {
       return Math.log(x) / Math.LN10;
   }
 }
+
 function calculateIDF(docFrequency, totalDocs){
   if((docFrequency < 1)||(totalDocs < 1)){
     return 0;
   }else{
     return totalDocs/docFrequency;
   }
-};
+}
+
+function calculateTFIDF(tf, idf){
+  return (tf * idf);
+}

@@ -10,15 +10,14 @@ var docIndex = {};
 var inverseIndex = {};
 
 
-console.log(
-  indexer.logNormalize(1)
-);
 
 //exposed functions for test.js
 module.exports = {
   listTxtFiles:listTxtFiles,
   readTxtFile:readTxtFile
 };
+
+
 function listTxtFiles(txtDir){
   var txtFiles = [];
   var allFiles = fs.readdirSync(txtDir);

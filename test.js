@@ -41,4 +41,12 @@ describe('the index.js file',function(){
       done();
     });
   });
+  it('should write index.json',function(done){
+    expect(true).to.be(true);
+    done();
+  });
+  it('should write suggest.json',function(done){
+    expect(true).to.be(true);
+    done();
+  });
 });

@@ -1,39 +1,66 @@
-##this is in progress..
-todo:
+##this is a work in progress..
+The general goal is to develop some sort of IR package that can be deployed on any web server. 
+Currently, my approach is to build a pretty standard system that indexes tf-idf values 
+and ranks the results based on some query. It uses node (should also be happy with io.js) to create 
+a static index file. It does the ranking with a client side script. Hopefully, I can gin up 
+something that will produce good results without eating all the resources. It would be nice if 
+sites that don't have or want full on database had local site wide search features, 
+at least for documentation. It would also be nice to have indexes to tell you what a document 
+is actually talking about in the context of the collection.
+
+todo: (currently)
   - [x] write spec for indexer
-  - [ ] write legit tests for indexer
-  - [ ] write legit tests for searcher
-  - [ ] write some precision/recall benchmarking thing
-  - [ ] searcher: write base tf-idf ranked search
+  - [ ] write spec 'tests' for indexer
+  - [ ] write spec 'tests' for searcher
+  - [ ] write some precision/recall/F benchmarking thing
+  - [ ] searcher: write simple tf-idf ranked search
   - [ ] searcher: write cos similarity option search filter
   - [ ] searcher: write multi-term suggestive search feature
   - [x] index: simple folder search
   - [x] index: get corpus size
   - [x] index: read txt files
-  - [ ] index: write inverse index
-  - [ ] index: write tf indexes
+  - [x] index: write inverse index
+  - [x] index: write tf indexes
+  - [x] index: write suggestion index
   - [x] indexer: simple text cleaner
   - [x] indexer: term frequency indexer
   - [x] indexer: vocab builder
   - [x] indexer: inverse indexer
   - [x] indexer: suggestive search list
-  - [ ] indexer: calculate inverse document frequency
+  - [x] indexer: calculate inverse document frequency
+  - [x] index: filter out 0 idf terms and suggestions
+  - [ ] index: sort (merge or native array) suggestions and index
   
+todo: Optimize this. It should only have to read through corpus once to create all indexes.
+todo: Consider some pre-sorting for the final objects, convert/merge-sort set-ish objects 
+      to hash-ish arrays. Possibly before returning docIndex & big index. 
 todo: Find and link my old tfidf calculating spread sheet to check values against. 
+todo: Implement Porter stemmer (porter-stemmer)
+todo: Find more a realistically sized test corpus to test performance and F-score, precision & recall.
+todo: try Cranfield collection http://ir.dcs.gla.ac.uk/resources/test_collections/cran/
+todo: consider flag for other content types .md, .html, etc.
+todo: consider extractors for those content types html-to-text, node-unfluff, remove-markdown
+
+metrics review:
+  - precision = PPV or tp/tp+fp or retrieved relevant/ all retrieved
+  - recall = TPR or tp/tp+fn or retrieved relevant/ all relevant
+  - Fscore = 2 * (precision * recall) / (precision + recall)
   
+todo: Find a good mix of metrics vs. performance presets.
+
 # tfidf search on txt files
 There are two parts.
 _The indexer_ is designed to index some txt files and calculate some log10 normalized tfidf values.
 Rather than a classic linked list it creates json object files that can be easily accessed 
 by the searcher, or whatever client or server side script you choose.
 _The searcher_ should calculate the cosine similarity of search terms to indexed documents.
-It should return the top 5 results.
-
+It should return the top 5 results. Searcher uses jquery, and jquery-ui auto-complete to 
+enhance the probability that terms existing in the corpus actually get searched for.
 
 
 ##restrictions
   - document names must be unique
-  - documents must exist in flat file
+  - documents must exist in one directory
 
 ##sync vs async
 For now the indexing is done synchronously.

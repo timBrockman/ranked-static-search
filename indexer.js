@@ -1,22 +1,36 @@
 //indexer function breakout
+var stemmer = require('porter-stemmer').stemmer;
+
 module.exports = {
   cleanTxt:cleanTxt,
+  stemEach:stemEach,
   tfIndex:tfIndex,
   buildVocab:buildVocab,
   logNormalize:logNormalize,
+  tfNormalize:tfNormalize,
   calculateIDF:calculateIDF,
   calculateTFIDF:calculateTFIDF,
   createSuggestions:createSuggestions
 };
 
 function cleanTxt(txt){
-  //feels kind of verbose
+  //this isn't real normalization
+  //but, this should be a fair compromise
   txt = txt.toLowerCase();
-  txt = txt.replace(/([^a-z0-9-]+)/g, ' ');
-  txt = txt.replace(/-/g,'');
+  txt = txt.replace(/([^a-z0-9-,.]+)/g, ' ');
+  txt = txt.replace(/[,.](?![0-9])|-/g,'');
+  //txt = txt.replace(/-/g,'');
   txt = txt.replace(/\s+/g, ' ');
   txt = txt.trim();
   return txt.split(' ');
+}
+
+function stemEach(words){
+  var stems = [];
+  words.forEach(function(word){
+    stems.push(stemmer(word));
+  });
+  return stems;
 }
 
 function tfIndex(wordList){
@@ -31,37 +45,38 @@ function tfIndex(wordList){
   return termFrequency;
 }
 
-function buildVocab(setObjA, setObjB, docName){
-  var vocab = {};
-  var counter = 0;
-  //copy & verify A
-  for(var atKey in setObjA){
-    if(!vocab[atKey]){
-      vocab[atKey] = setObjA[atKey];
+function buildVocab(invIndex, tfIndex, docName){
+  //create new entries for current index
+  for(var atKey in tfIndex){
+    if(!invIndex[atKey]){
+      invIndex[atKey] = [];
     }
+    invIndex[atKey].push(docName);
   }
-  //create new entries for B
-  for(var atKey in setObjB){
-    if(!vocab[atKey]){
-      vocab[atKey] = {
-        'idf':1,
-        'inverseIndex':[]
-      };
-      vocab[atKey]['inverseIndex']= {docName:1.0};
-    }else{
-      vocab[atKey]['idf']+=1;
-      vocab[atKey]['inverseIndex'].push({docName:1.0});
-    }
-  }
-  return vocab;
+  //pass object global by ref
+  return true;
 }
 
-function createSuggestions(vocab){
-  var words = [];
-  for(var atWord in vocab){
-    words.push(atWord);
-  }
-  return words;
+function createSuggestions(sugIndex, terms, stems){
+  var counter = 0;
+  var terms = terms;
+  var stems = stems;
+  var sugIndex = sugIndex;
+  terms.forEach(function(term){
+    var term = (''+term);
+    if(!sugIndex[term]){
+      if(!stems){
+        sugIndex[term] = sugIndex[term];
+      }else{
+        sugIndex[term] = stems[counter];
+      }
+    }
+
+    //sugIndex[term] = stems[counter];
+    counter++;
+  });
+  //pass object global by ref
+  return true;
 }
 
 function logNormalize(value){
@@ -69,9 +84,14 @@ function logNormalize(value){
     return 0;
   }else{
     return log10(value);
-  }// don't forget to add one to tf
-  function log10(x) {
-      return Math.log(x) / Math.LN10;
+  }
+}
+
+function tfNormalize(value){
+  if(value < 1){
+    return 0;
+  }else{
+    return (1.0 + log10(value));
   }
 }
 
@@ -85,4 +105,8 @@ function calculateIDF(docFrequency, totalDocs){
 
 function calculateTFIDF(tf, idf){
   return (tf * idf);
+}
+
+function log10(x) {
+  return Math.log(x) / Math.LN10;
 }

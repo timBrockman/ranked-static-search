@@ -4,16 +4,25 @@
   "description": "Index and search static txt content.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test.js"
   },
   "keywords": [
     "node",
     "tfidf",
     "search"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timBrockma/static_search"
+  },
   "author": "Tim Brockman",
   "license": "MIT",
   "devDependencies": {
-    "expect.js": "^0.3.1"
+    "expect.js": "^0.3.1",
+    "mocha": "^2.2.4"
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.0",
+    "porter-stemmer": "^0.9.1"
   }
 }

@@ -13,7 +13,9 @@ todo: (currently)
   - [ ] write spec 'tests' for indexer
   - [ ] write spec 'tests' for searcher
   - [ ] write some precision/recall/F benchmarking thing
-  - [ ] searcher: write simple tf-idf ranked search
+  - [ ] demo.html: write simple demo.html wrapper
+  - [ ] demo.html: incorporate benchmarking in wrapper
+  - [ ] -searcher: write simple tf-idf ranked search (vsm)-
   - [ ] searcher: write cos similarity option search filter
   - [ ] searcher: write multi-term suggestive search feature
   - [x] index: simple folder search
@@ -22,15 +24,17 @@ todo: (currently)
   - [x] index: write inverse index
   - [x] index: write tf indexes
   - [x] index: write suggestion index
+  - [x] index: write document vector norm index
   - [x] indexer: simple text cleaner
   - [x] indexer: term frequency indexer
   - [x] indexer: vocab builder
   - [x] indexer: inverse indexer
   - [x] indexer: suggestive search list
   - [x] indexer: calculate inverse document frequency
+  - [x] indexer: calculate document vector norm
   - [x] index: filter out 0 idf terms and suggestions
   - [ ] index: sort (merge or native array) suggestions and index
-  
+
 todo: Optimize this. It should only have to read through corpus once to create all indexes.
 todo: Consider some pre-sorting for the final objects, convert/merge-sort set-ish objects 
       to hash-ish arrays. Possibly before returning docIndex & big index. 

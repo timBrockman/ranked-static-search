@@ -10,6 +10,11 @@ var corpusDir = path.normalize('./' + config.corpus);
 
 // index vars
 var totalDocs = 0; //listTxtFiles(dir).length
+var vectorNorms = {};
+/*vector norm format
+* {<docName>:vectorNorm}
+* consider clobbering docIndex instead
+ */
 var docIndex = {};
 /*doc index format
 * {<docName>:{<term>:raw TF (int)}}
@@ -95,19 +100,32 @@ for(var term in inverseIndex){
   }else {
     bigIndex[term] = {
       idf: curIDF,
-      docs: []
+      docs: {}
     };
     inverseIndex[term].forEach(function (doc) {
       curTF = 1 + indexer.tfNormalize(docIndex[doc][term]);
       curTFIDF = indexer.calculateTFIDF(curTF, curIDF);
       var k = {};
       k[doc]=curTFIDF;
-      bigIndex[term].docs.push(k);
+      bigIndex[term].docs = k;
     });
 
   }
 }
+
+//create document vector length norms
+for(var doc in docIndex){
+  var curVector = [];
+  for(var term in docIndex[doc]){
+    if(bigIndex.hasOwnProperty(term)){
+      curVector.push(bigIndex[term]['docs'][doc]);
+    }
+  }
+  vectorNorms[doc] = indexer.calculateVN(curVector);
+}
+
 writeIndexes();
+//console.log(vectorNorms);
 //console.log(Object.keys(suggestIndex).length);
 //console.log(JSON.stringify(bigIndex));
 //exposed functions for test.js
@@ -143,4 +161,6 @@ function writeIndexes(){
   fs.writeFileSync(path.normalize(config.dest + '/indexes/' +'indexes.json'),JSON.stringify(bigIndex));
   //write suggestions
   fs.writeFileSync(path.normalize(config.dest + '/indexes/' +'suggestions.json'),JSON.stringify(suggestIndex));
+  //write docnorms
+  fs.writeFileSync(path.normalize(config.dest + '/indexes/' +'docnorms.json'),JSON.stringify(vectorNorms));
 }

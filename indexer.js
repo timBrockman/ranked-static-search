@@ -10,7 +10,8 @@ module.exports = {
   tfNormalize:tfNormalize,
   calculateIDF:calculateIDF,
   calculateTFIDF:calculateTFIDF,
-  createSuggestions:createSuggestions
+  createSuggestions:createSuggestions,
+  calculateVN:calculateVN
 };
 
 function cleanTxt(txt){
@@ -109,4 +110,13 @@ function calculateTFIDF(tf, idf){
 
 function log10(x) {
   return Math.log(x) / Math.LN10;
+}
+
+function calculateVN(dimensions){
+  //vector length normalization = sqrt of summation tfidf^2
+  var score = 0;
+  dimensions.forEach(function(dimension){
+    score += (dimension^2);
+  });
+  return Math.sqrt(score);
 }

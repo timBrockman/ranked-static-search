@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>static search demo</title>
+</head>
+
+<input type="text" />
+<input type="button" />
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="searcher.js"></script>
+<script>
+  $(
+    function(){
+      //load index json files
+      $.getJSON('indexes/suggest.json')
+        .done(function(data){
+          console.log(data);
+        });
+
+    }
+    )
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@ var fs      = require('fs'),
     path    = require('path'),
     mkdirp  = require('mkdirp'),
     config  = require('./config.js'),
-    indexer = require('./indexer.js');
+    indexer = require('./server/indexer.js');
 
 var corpusDir = path.normalize('./' + config.corpus);
 

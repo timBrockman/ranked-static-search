@@ -17,7 +17,7 @@ todo: (currently)
   - [x] demo.html: write simple demo.html wrapper
   - [ ] test.html: incorporate benchmarking in wrapper
   - [x] searcher: write cos similarity search
-  - [ ] searcher: merge-sort result set to rank by value
+  - [x] searcher: merge-sort result set to rank by value
   - [x] demo.html: write multi-term suggestive search feature
   - [x] index: simple folder search
   - [x] index: get corpus size

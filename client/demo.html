@@ -5,22 +5,87 @@
   <title>static search demo</title>
 </head>
 
-<input type="text" />
-<input type="button" />
+<input type="text" id="searchbox"/>
+<input type="button" id="searchbutton"/>
+<ol id="results">
+</ol>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="searcher.js"></script>
 <script>
   $(
     function(){
+      var suggestions   = {},
+          docNorms      = {},
+          indexes       = {},
+          terms         = [],
+          searchResults = {};
       //load index json files
-      $.getJSON('indexes/suggest.json')
-        .done(function(data){
-          console.log(data);
+      showLoading();
+      $.when(
+        $.getJSON('indexes/suggestions.json')
+          .done(function(data){
+            suggestions = data;
+          }),
+        $.getJSON('indexes/indexes.json')
+          .done(function(data){
+            indexes = data;
+          }),
+        $.getJSON('indexes/docnorms.json')
+          .done(function(data){
+            docNorms = data;
+          })
+      ).then(showSearchForm());
+      $("#searchbox")
+        .bind("keydown", function(event){
+          if(event.keyCode === $.ui.keyCode.TAB && $(this).autocomplete("instance").menu.active){
+            event.preventDefault();
+          }})
+        .autocomplete({
+          minLength:2,
+          source: function(request, response){
+            response(
+              $.ui.autocomplete.filter(
+                Object.keys(suggestions),
+                extractLast(request.term)
+              )
+            );
+          },
+          focus: function(){
+            return false;
+          },
+          select: function(e, ui){
+            terms = splitQuery(this.value);
+            terms.pop();
+            terms.push(ui.item.value);
+            terms.push('');
+            ui.item.value = terms.join(' ');
+          }
         });
-
-    }
-    )
+      $("#searchbutton").on('click',function(){
+        searchResults = searcher($("#searchbox").val(),suggestions,docNorms,indexes);
+        var resultOut = '';
+        $("#results").html(function(){
+          searchResults.forEach(function(curResult){
+            var curKey = Object.keys(curResult)[0];
+            resultOut += '<li>'+ curKey +': ' + curResult[curKey] +'</li>';
+          });
+          return resultOut;
+        });
+      });
+      function splitQuery(query){
+        return query.split(/\s+/);
+      }
+      function extractLast(query) {
+        return splitQuery(query).pop();
+      }
+      function showSearchForm(){
+        console.log('all data loaded');
+      }
+      function showLoading(){
+        console.log('loading gif');
+      }
+    });
 </script>
 </body>
 </html>

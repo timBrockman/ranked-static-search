@@ -3,6 +3,9 @@ The general goal is to develop some sort of IR package that can be deployed on a
  It would be nice if sites that don't have or want full on database had local site wide search
   features, at least for documentation. It would also be nice to have indexes to tell you what 
   a document is actually talking about in the context of the collection.
+
+
+[My Google Sheet for basic TF-IDF calculations](https://docs.google.com/spreadsheets/d/1yWSgmJH1Zr5XkGIhCvssmIMYAXnNfilsidj5dsaxGl4/edit?usp=sharing)
   
 Currently, my approach is to build a pretty standard system that indexes tf-idf values 
 and ranks the results based on some query. It uses node (should also be happy with io.js) 
@@ -35,16 +38,15 @@ todo: (currently)
   - [x] indexer: calculate document vector norm
   - [x] index: filter out 0 idf terms and suggestions
   - [ ] index: sort (merge or native array) suggestions and index 
-
-todo: Optimize this. It should only have to read through corpus once to create all indexes.
-todo: Consider some pre-sorting for the final objects, convert/merge-sort set-ish objects 
-      to hash-ish arrays. Possibly before returning docIndex & big index. 
-todo: Find and link my old tfidf calculating spread sheet to check values against. 
--todo: Implement Porter stemmer (porter-stemmer)-
-todo: Find more a realistically sized test corpus to test performance and F-score, precision & recall.
-todo: try Cranfield collection http://ir.dcs.gla.ac.uk/resources/test_collections/cran/
-todo: consider flag for other content types .md, .html, etc.
-todo: consider extractors for those content types html-to-text, node-unfluff, remove-markdown
+  - [x] docs: add link to google tf-idf sheet
+  - [ ] docs: clean up and update google sheet to be more clear
+  - [ ] Optimize this. It should only have to read through corpus once to create all indexes.
+  - [ ] Consider some pre-sorting for the final objects, convert/merge-sort set-ish objects to hash-ish arrays. Possibly before returning docIndex & big index. 
+  - [x] Find and link my old tfidf calculating spread sheet to check values against. 
+  - [x] Implement Porter stemmer (porter-stemmer)
+  - [ ] Find more a realistically sized test corpus to test performance and F-score, precision & recall.
+  - [ ] consider flag for other content types .md, .html, etc.
+  - [ ] consider extractors for those content types html-to-text, node-unfluff, remove-markdown
 
 metrics review:
   - precision = PPV or tp/tp+fp or retrieved relevant/ all retrieved

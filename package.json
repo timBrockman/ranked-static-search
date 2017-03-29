@@ -4,7 +4,9 @@
   "description": "Index and search static txt content.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha test.js",
+    "flow": "flow",
+    "remflow": "flow-remove-types src/ -D lib/"
   },
   "keywords": [
     "node",
@@ -22,6 +24,8 @@
     "eslint": "^3.18.0",
     "eslint-config-google": "^0.7.1",
     "expect.js": "^0.3.1",
+    "flow-bin": "^0.42.0",
+    "flow-remove-types": "^1.2.0",
     "mocha": "^2.2.4"
   },
   "dependencies": {

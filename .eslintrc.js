@@ -1,3 +1,6 @@
 module.exports = {
-    "extends": "google"
+    "extends": "google",
+    "env":{
+        "es6": true
+    }
 };

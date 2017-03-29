@@ -1,3 +1,8 @@
+# Ranked Static Search
+
+This is creates a series of indexes(ices) in .json format. You can use these (tfidf) values to create quick vector space comparisons between documents and/or search terms. This could also be used to pull unique keywords from your documents.
+
+
 ##this is a work in progress..
 The general goal is to develop some sort of IR package that can be deployed on any web server.
  It would be nice if sites that don't have or want full on database had local site wide search

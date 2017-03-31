@@ -2,6 +2,14 @@
 
 This is creates a series of indexes(ices) in .json format. You can use these (tfidf) values to create quick vector space comparisons between documents and/or search terms. This could also be used to pull unique keywords from your documents.
 
+## 2017-3-30 update
+todo: start building tests for refactor
+todo: eslint and restructure index.js, refactor as I go
+todo: think about new es6 data types
+todo: restructure project
+
+done: quick eslint of indexer.js
+
 
 ##this is a work in progress..
 The general goal is to develop some sort of IR package that can be deployed on any web server.

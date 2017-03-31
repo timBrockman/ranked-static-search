@@ -1,17 +1,19 @@
-//some basic requires
-var fs      = require('fs'),
-    path    = require('path'),
-    mkdirp  = require('mkdirp'),
-    config  = require('./config.js'),
-    indexer = require('./server/indexer.js');
+// some basic requires
+const fs = require('fs');
+const path = require('path');
+const mkdirp = require('mkdirp');
+const config = require('./config.js');
+const indexer = require('./server/indexer.js');
 
-var corpusDir = path.normalize('./' + config.corpus);
+const corpusDir = path.normalize('./' + config.corpus);
+
+
 
 
 // index vars
-var totalDocs = 0; //listTxtFiles(dir).length
-var vectorNorms = {};
-/*vector norm format
+let totalDocs = 0; // listTxtFiles(dir).length
+let vectorNorms = {};
+/* vector norm format
 * {<docName>:vectorNorm}
 * consider clobbering docIndex instead
  */
